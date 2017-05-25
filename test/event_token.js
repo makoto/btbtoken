@@ -19,6 +19,20 @@ contract('EventToken', function(accounts) {
     assert.strictEqual((await token.decimals.call()).toNumber(), 0);
   })
 
+  it("issuer can give token with identity", async function(){
+    await token.give(ether_card, web3.fromUtf8(identity), {from:issuer});
+    assert.strictEqual(await token.isTokenOwner.call(ether_card), true);
+    assert.strictEqual(web3.toUtf8(await token.ownerToIdentity.call(ether_card)), identity);
+    assert.strictEqual(await token.identityToOwner.call(web3.fromUtf8(identity)), ether_card);
+  })
+
+  it("token owner can claim the issued token with identity", async function(){
+    await token.issue(ether_card, {from:issuer});
+    await token.claim(web3.fromUtf8(identity), {from:ether_card});
+    assert.strictEqual(await token.isTokenOwner.call(ether_card), true);
+    assert.strictEqual(web3.toUtf8(await token.ownerToIdentity.call(ether_card)), identity);
+  })
+
   it("can transfer identity", async function(){
     await token.issue(ether_card, {from:issuer});
     await token.claim(web3.fromUtf8(identity), {from:ether_card});

@@ -37,6 +37,15 @@ contract EventToken is MintableToken, LimitedTransferToken {
     _;
   }
 
+  /* this is when issuer already know the identity of the participant */
+  /* and they are fine to have their real name attached to the token */
+  function give(address _to, bytes32 identity) onlyOwner onlyUnique(identity) {
+    mint(owner, unit);
+    transfer(_to, unit);
+    certify(_to, identity);
+  }
+  /* this is when issuer does not know the dientity of the participant  */
+  /* or they prefer to use nickname */
   function issue(address _to) onlyOwner {
     mint(owner, unit);
     approve(_to, unit);
@@ -44,12 +53,16 @@ contract EventToken is MintableToken, LimitedTransferToken {
 
   function claim(bytes32 identity) onlyUnique(identity) {
     transferFrom(owner, msg.sender, unit);
-    ownerToIdentity[msg.sender] = identity;
-    identityToOwner[identity] = msg.sender;
-    TokenClaimed(msg.sender, identity);
+    certify(msg.sender, identity);
   }
 
-  function isTokenOwner(address _owner) constant returns (bool) {
-    return balanceOf(_owner) >= unit;
+  function certify(address _token_owner, bytes32 identity) internal {
+    ownerToIdentity[_token_owner] = identity;
+    identityToOwner[identity] = _token_owner;
+    TokenClaimed(_token_owner, identity);
+  }
+
+  function isTokenOwner(address _token_owner) constant returns (bool) {
+    return balanceOf(_token_owner) >= unit;
   }
 }
