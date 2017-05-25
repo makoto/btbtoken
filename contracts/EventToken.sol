@@ -1,18 +1,16 @@
 pragma solidity ^0.4.8;
-
-import './zeppelin/token/MintableToken.sol';
-import './zeppelin/token/LimitedTransferToken.sol';
-
-/**
- * Event token
- *
+/// @title Event token
+/// @author Makoto Inoue
+/*
  * Based on code by Devcon2 token
  * http://github.com/pipermerriam/devcon2-token
  *
- * Additoinal rule
- * - You can only transfer 1 unit at a time (to avoid shared proof);
+ * The Token is mostly inherited from OpenZeppelin
+ * https://github.com/OpenZeppelin/zeppelin-solidity
  *
  */
+import './zeppelin/token/MintableToken.sol';
+import './zeppelin/token/LimitedTransferToken.sol';
 
 contract EventToken is MintableToken, LimitedTransferToken {
   uint public constant unit = 1;
@@ -21,6 +19,7 @@ contract EventToken is MintableToken, LimitedTransferToken {
   mapping (address => bytes32) public ownerToIdentity;
   mapping (bytes32 => address) public identityToOwner;
 
+  /// @dev add _to the original canTransfer modifier
   modifier canTransfer(address _sender, address _to, uint _value) {
    if (_value != unit) throw;
    if (_value > transferableTokens(_sender, uint64(now))) throw;
@@ -37,31 +36,40 @@ contract EventToken is MintableToken, LimitedTransferToken {
     _;
   }
 
-  /* this is when issuer already know the identity of the participant */
-  /* and they are fine to have their real name attached to the token */
+  /// @dev this is when issuer already know the identity of the participant
+  /// @dev and they are fine to have their real name attached to the token
+  /// @param the address of the token owner
+  /// @param the unique name of the token owner (eg: Makoto) in bytes32 format
   function give(address _to, bytes32 identity) onlyOwner onlyUnique(identity) {
     mint(owner, unit);
     transfer(_to, unit);
     certify(_to, identity);
   }
-  /* this is when issuer does not know the dientity of the participant  */
-  /* or they prefer to use nickname */
+
+  /// @dev this is when issuer does not know the dientity of the participant
+  /// @dev or they prefer to use nickname */
+  /// @param the address of the token owner
   function issue(address _to) onlyOwner {
     mint(owner, unit);
     approve(_to, unit);
   }
 
+  /// @param the unique name of the token owner (eg: Makoto) in bytes32 format
   function claim(bytes32 identity) onlyUnique(identity) {
     transferFrom(owner, msg.sender, unit);
     certify(msg.sender, identity);
   }
 
+  /// @param the address of the token owner
+  /// @param the unique name of the token owner (eg: Makoto) in bytes32 format
   function certify(address _token_owner, bytes32 identity) internal {
     ownerToIdentity[_token_owner] = identity;
     identityToOwner[identity] = _token_owner;
     TokenClaimed(_token_owner, identity);
   }
 
+  /// @dev this will show true even if user directly transfer the token without using certify
+  /// @param the address of the token owner
   function isTokenOwner(address _token_owner) constant returns (bool) {
     return balanceOf(_token_owner) >= unit;
   }
