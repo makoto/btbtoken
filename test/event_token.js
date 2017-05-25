@@ -22,11 +22,11 @@ contract('EventToken', function(accounts) {
   it("can transfer identity", async function(){
     await token.issue(ether_card, {from:issuer});
     await token.claim(web3.fromUtf8(identity), {from:ether_card});
-    assert.strictEqual((await token.isTokenOwner.call(ether_card)), true);
+    assert.strictEqual(await token.isTokenOwner.call(ether_card), true);
     assert.strictEqual(web3.toUtf8(await token.ownerToIdentity.call(ether_card)), identity);
 
     await token.transfer(participant_wallet, 1, {from:ether_card});
-    assert.strictEqual((await token.isTokenOwner.call(participant_wallet)), true);
+    assert.strictEqual(await token.isTokenOwner.call(participant_wallet), true);
     assert.strictEqual(web3.toUtf8(await token.ownerToIdentity.call(participant_wallet)), identity);
     assert.strictEqual(await token.identityToOwner.call(web3.fromUtf8(identity)), participant_wallet);
   })
@@ -36,10 +36,9 @@ contract('EventToken', function(accounts) {
     await token.claim(web3.fromUtf8(identity), {from:ether_card});
     await token.issue(participant_wallet, {from:issuer});
     await token.claim(web3.fromUtf8(identity), {from:participant_wallet}).catch(function(){});
-    assert.strictEqual((await token.isTokenOwner.call(participant_wallet)), false);
+    assert.strictEqual(await token.isTokenOwner.call(participant_wallet), false);
     assert.strictEqual(web3.toUtf8(await token.ownerToIdentity.call(participant_wallet)), '');
-    let owner = await token.identityToOwner.call(web3.fromUtf8(identity))
-    assert.strictEqual(owner, ether_card);
+    assert.strictEqual(await token.identityToOwner.call(web3.fromUtf8(identity)), ether_card);
   })
 
   // it("cannot transfer to existing owner")
