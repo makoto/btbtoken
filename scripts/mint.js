@@ -7,19 +7,20 @@ let provider = new Web3.providers.HttpProvider('http://localhost:8545')
 let web3 = new Web3(provider);
 BTBToken.setProvider(provider);
 let argv = yargs
-    .usage('Usage: npm run -s mint -- --o contract_owner_address --m mint_address')
+    .usage('Usage: npm run -s mint -- --o issuer_address --t token_owner_address --n name')
     // avoid address to hex conversion
-    .coerce(['o', 'm'], function (arg) { return arg})
-    .demandOption(['o', 'm'])
+    .coerce(['o', 't'], function (arg) { return arg})
+    .demandOption(['o', 't', 'n'])
     .argv;
 
 let mint = async function(){
   let token = await BTBToken.deployed()
   let token_name = await token.name.call();
   console.log('token_name', token_name, token.address)
-  console.log(argv.o, ' is minting to', argv.m)
-  await token.mint(argv.m, 1, {from:argv.o});
-  let balance = await token.balanceOf.call(argv.m);
+  console.log(argv.o, ' is issuing an event token to', argv.t, ' with identity ', argv.n)
+  let transaction = await token.give(argv.t, web3.fromUtf8(argv.n), 1, {from:argv.o, gas:200000});
+  console.log('transaction', transaction.tx, ' used ',  transaction.receipt.gasUsed, 'gas');
+  let balance = await token.balanceOf.call(argv.t);
   console.log('balance', balance.toNumber());
 }
 
