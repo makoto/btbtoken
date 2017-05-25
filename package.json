@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Frontend example using truffle v3",
   "scripts": {
+    "mint": "babel-node ./scripts/mint.js",
     "lint": "eslint ./",
     "build": "webpack",
     "dev": "webpack-dev-server"
@@ -35,6 +36,7 @@
     "webpack-dev-server": "^2.3.0"
   },
   "dependencies": {
+    "babel-preset-latest": "^6.24.1",
     "zeppelin-solidity": "^1.0.5"
   }
 }
