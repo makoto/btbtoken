@@ -19,15 +19,15 @@ contract EventToken is MintableToken, LimitedTransferToken {
   uint public constant decimals = 0;
   /// @dev use the event to find out all the token owners identities
   event TokenClaimed(address indexed _to, bytes32 identity);
-  /// @notice ownerToIdentity(address)
+  /// @notice address = ownerToIdentity(address)
   mapping (address => bytes32) public ownerToIdentity;
-  /// @notice identityToOwner(identity)
+  /// @notice bytes32 = identityToOwner(identity)
   mapping (bytes32 => address) public identityToOwner;
 
   /// @dev added _to the original canTransfer modifier
-  /// @param address of the sender
-  /// @param address of the receiver
-  /// @param amount to send
+  /// @param _sender = address of the sender
+  /// @param _to = address of the receiver
+  /// @param _value = amount to send
   modifier canTransfer(address _sender, address _to, uint _value) {
    if (_value != unit) throw;
    if (_value > transferableTokens(_sender, uint64(now))) throw;
@@ -46,8 +46,8 @@ contract EventToken is MintableToken, LimitedTransferToken {
 
   /// @dev this is when issuer already know the identity of the participant
   /// @dev and they are fine to have their real name attached to the token
-  /// @param the address of the token owner
-  /// @param the unique name of the token owner (eg: Makoto) in bytes32 format
+  /// @param _to = the address of the token owner
+  /// @param identity = the unique name of the token owner (eg: Makoto) in bytes32 format
   function give(address _to, bytes32 identity) onlyOwner onlyUnique(identity) {
     mint(owner, unit);
     transfer(_to, unit);
@@ -56,20 +56,20 @@ contract EventToken is MintableToken, LimitedTransferToken {
 
   /// @dev this is when issuer does not know the dientity of the participant
   /// @dev or they prefer to use nickname */
-  /// @param the address of the token owner
+  /// @param _to = the address of the token owner
   function issue(address _to) onlyOwner {
     mint(owner, unit);
     approve(_to, unit);
   }
 
-  /// @param the unique name of the token owner (eg: Makoto) in bytes32 format
+  /// @param identity = the unique name of the token owner (eg: Makoto) in bytes32 format
   function claim(bytes32 identity) onlyUnique(identity) {
     transferFrom(owner, msg.sender, unit);
     certify(msg.sender, identity);
   }
 
-  /// @param the address of the token owner
-  /// @param the unique name of the token owner (eg: Makoto) in bytes32 format
+  /// @param _token_owner = the address of the token owner
+  /// @param identity = the unique name of the token owner (eg: Makoto) in bytes32 format
   function certify(address _token_owner, bytes32 identity) internal {
     ownerToIdentity[_token_owner] = identity;
     identityToOwner[identity] = _token_owner;
@@ -77,7 +77,7 @@ contract EventToken is MintableToken, LimitedTransferToken {
   }
 
   /// @dev this will show true even if user directly transfer the token without using certify
-  /// @param the address of the token owner
+  /// @param _token_owner == the address of the token owner
   function isTokenOwner(address _token_owner) constant returns (bool) {
     return balanceOf(_token_owner) >= unit;
   }
