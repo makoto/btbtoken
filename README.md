@@ -33,10 +33,22 @@ This is recommended when it's harder to keep track of all the attendance of the 
   token.claim(web3.fromUtf8(identity), {from:token_owner});
 ```
 
+## Utils
+
+### Issue token
+
+`npm run -s mint -- --o issuer_address --t token_owner_address (--n name)`
+
+- Issuer will give token if `-n` is supplied.
+- Issue will issue tokens for token owner to claim if `-n` is not supplied.
+
+### Find out who has claimed the token
+
+`npm run -s report`
+
 ## Open questions
 
 - Currently there is no mechanism to prevent people from having more than one token. It's relatively easy to add the constraints, but what is the pros/cons?
-
 
 ## TODO
 
