@@ -1,29 +1,43 @@
-# truffle-init-webpack
-Example webpack project with Truffle. Includes contracts, migrations, tests, user interface and webpack build pipeline.
+# BTBToken (POC for Event Token standard)
 
-## Usage
+This is an extension ERC20 token which is offered to the participants of [Break The Block](http://breaktheblock.simplybusiness.co.uk) hackathon.
 
-To initialize a project with this exapmple, run `truffle init webpack` inside an empty directory.
+## Special rules for the event token
 
-## Building and the frontend
+- 1 token per person
+- no delimiter on the token
 
-1. First run `truffle compile`, then run `truffle migrate` to deploy the contracts onto your network of choice (default "development").
-1. Then run `npm run dev` to build the app and serve it on http://localhost:8080
+## Additional features
 
-## Possible upgrades
+- `isTokenOwner(address)` checks if the address is the token owner.
+- `ownerToIdentity(address)` returns identity of the address in bytes32 format.
+- `identityToOwner(identity)` returns the address of the identity.
 
-* Use the webpack hotloader to sense when contracts or javascript have been recompiled and rebuild the application. Contributions welcome!
+## How to issue and claim the event token.
 
-## Common Errors
-
-* **Error: Can't resolve '../build/contracts/MetaCoin.json'**
-
-This means you haven't compiled or migrated your contracts yet. Run `truffle compile` and `truffle migrate` first.
-
-Full error:
+Token can be given directly from issuer to the participants.
+This is recommended when issuers already know the identity of the participants
+these participants may not be technical enough to claim by themselves.
+However this method requires the issuer (often the event organiser) to keep track of who actually attended the event. Otherwise it will hold the identity of no shows.
 
 ```
-ERROR in ./app/main.js
-Module not found: Error: Can't resolve '../build/contracts/MetaCoin.json' in '/Users/tim/Documents/workspace/Consensys/test3/app'
- @ ./app/main.js 11:16-59
+  token.give(token_owner, web3.fromUtf8(identity), {from:issuer});
 ```
+
+The alternative way is that issuer issues the token which participants can claim.
+The issuer can issue the token to one time address (such as http://ether.cards) which then can be transferred to any other address.
+This is recommended when it's harder to keep track of all the attendance of the participants or participants prefer to use nickname of their choice.
+
+```
+  token.issue(token_owner, {from:issuer});
+  token.claim(web3.fromUtf8(identity), {from:token_owner});
+```
+
+## Open questions
+
+- Currently there is no mechanism to prevent people from having more than one token. It's relatively easy to add the constraints, but what is the pros/cons?
+
+
+## TODO
+
+- Build a front end
