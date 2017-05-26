@@ -33,7 +33,17 @@ This is recommended when it's harder to keep track of all the attendance of the 
   token.claim(web3.fromUtf8(identity), {from:token_owner});
 ```
 
+## Developer guide
+
+### Initial setup
+
+```npm install```
+
+```truffle migrate```
+
 ## Utils
+
+Run `npm run build` first to make sure that correct contract artifacts are generated under `build/contracts/`
 
 ### Issue token
 
