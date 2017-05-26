@@ -10,15 +10,22 @@ let argv = yargs
     .usage('Usage: npm run -s mint -- --o issuer_address --t token_owner_address --n name')
     // avoid address to hex conversion
     .coerce(['o', 't'], function (arg) { return arg})
-    .demandOption(['o', 't', 'n'])
+    .demandOption(['o', 't'])
     .argv;
 
 let mint = async function(){
   let token = await BTBToken.deployed()
   let token_name = await token.name.call();
   console.log('token_name', token_name, token.address)
-  console.log(argv.o, ' is issuing an event token to', argv.t, ' with identity ', argv.n)
-  let transaction = await token.give(argv.t, web3.fromUtf8(argv.n), 1, {from:argv.o, gas:200000});
+  let transaction;
+  if (argv.n) {
+    console.log(argv.o, ' is giving an event token to', argv.t, ' with identity ', argv.n)
+    transaction = await token.give(argv.t, web3.fromUtf8(argv.n), 1, {from:argv.o, gas:200000});
+  }else{
+    console.log(argv.o, ' is issuing an event token to', argv.t, ' to claim');
+    transaction = await token.issue(argv.t, 1, {from:argv.o, gas:200000});
+  }
+
   console.log('transaction', transaction.tx, ' used ',  transaction.receipt.gasUsed, 'gas');
   let balance = await token.balanceOf.call(argv.t);
   console.log('balance', balance.toNumber());
