@@ -13,13 +13,21 @@ import './zeppelin/token/MintableToken.sol';
 import './zeppelin/token/LimitedTransferToken.sol';
 
 contract EventToken is MintableToken, LimitedTransferToken {
+  /// @notice 1 token per 1 participant of the event will be issued
   uint public constant unit = 1;
+  /// @notice No delimiter
   uint public constant decimals = 0;
+  /// @dev use the event to find out all the token owners identities
   event TokenClaimed(address indexed _to, bytes32 identity);
+  /// @notice ownerToIdentity(address)
   mapping (address => bytes32) public ownerToIdentity;
+  /// @notice identityToOwner(identity)
   mapping (bytes32 => address) public identityToOwner;
 
-  /// @dev add _to the original canTransfer modifier
+  /// @dev added _to the original canTransfer modifier
+  /// @param address of the sender
+  /// @param address of the receiver
+  /// @param amount to send
   modifier canTransfer(address _sender, address _to, uint _value) {
    if (_value != unit) throw;
    if (_value > transferableTokens(_sender, uint64(now))) throw;
