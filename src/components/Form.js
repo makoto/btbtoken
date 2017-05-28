@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import {claim} from '../services/token';
 import {getUser} from '../services/user';
-let submitForm;
+let submitForm, infoBox;
 class Form extends Component {
   constructor(props){
     super(props);
     this.state = {
-      identity: null
+      identity: null,
+      in_progress: false,
+      block_hash: null
     };
   }
 
@@ -22,10 +24,22 @@ class Form extends Component {
 
   submit(event){
     event.preventDefault()
-    claim(this.props.user.address, this.state.identity);
+    claim(this.props.user.address, this.state.identity).then(trx => {
+      this.setState({
+        in_progress:true,
+        block_hash: trx.receipt.blockHash
+      })
+    })
   }
   render(){
-    if (this.props.user.status == 'claimable') {
+    if (this.state.in_progress){
+      infoBox = (
+        <div style={{color: '#FBBC05', width:'50%', margin:'auto', padding:'2em'}}>
+          Waiting to get confirmation.
+        </div>
+      )
+    }
+    if (this.props.user.status == 'claimable' && !this.state.in_progress) {
       submitForm = (
         <form className="claim" onSubmit={this.submit.bind(this)}>
           <input onChange={this.change.bind(this)}
@@ -49,6 +63,7 @@ class Form extends Component {
         </select>
         <br/>
         {submitForm}
+        {infoBox}
       </div>
     )
   }

@@ -83,9 +83,8 @@ export function getToken() {
   })
 }
 
-export function claim(address, identity){
-  return getToken().then(function(t){
-    console.log('claim3', web3Util.fromUtf8(identity), identity, {from:address})
-    return t.claim(web3Util.fromUtf8(identity), {from:address});
-  })
+export async function claim(address, identity){
+  let token = await getToken()
+  // It gets out of gas event at 100k. Is this too expensive?
+  return await token.claim(web3Util.fromUtf8(identity), {from:address, gas:200000});
 }
