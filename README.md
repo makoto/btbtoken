@@ -59,6 +59,7 @@ Run `npm run build` first to make sure that correct contract artifacts are gener
 ## Open questions
 
 - Currently there is no mechanism to prevent people from having more than one token. It's relatively easy to add the constraints, but what is the pros/cons?
+- Is it better to build on top of [Minime token](https://medium.com/giveth/the-minime-token-open-sourced-by-giveth-2710c0210787) so that it's easier to upgrade?
 
 ## TODO
 
