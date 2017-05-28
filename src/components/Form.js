@@ -17,7 +17,8 @@ class Form extends Component {
   submit(event){
     console.log('event.target.value', this.props.user.address,  this.state.identity)
     event.preventDefault()
-    claim(this.props.user.address, this.state.identity);
+    let transaction = claim(this.props.user.address, this.state.identity);
+    console.log('transaction', transaction);
   }
   render(){
     console.log('this.props.user.status', this.props.user.status)

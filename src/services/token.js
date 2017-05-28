@@ -6,7 +6,7 @@ import artifacts from '../contracts/BTBToken.json'
 // ownerToIdentity.call(ether_card)
 //
 var Token  = TruffleContract(artifacts);
-
+const web3Util = new Web3()
 export function name() {
   return getToken().then(function(t){
     return t.name.call()
@@ -40,7 +40,7 @@ export function ownerToIdentity(address) {
 
 export function identityToOwner(identity) {
   return getToken().then(function(t){
-    return t.identityToOwner.call(web3Promise.fromUtf8(identity))
+    return t.identityToOwner.call(web3Util.fromUtf8(identity))
   })
 }
 
@@ -79,9 +79,7 @@ export function getToken() {
 
 export function claim(address, identity){
   return getToken().then(function(t){
-    console.log('claim2', (new Web3()).fromUtf8(identity), identity, {from:address})
-    debugger
-
-    // return t.claim(web3.fromUtf8(identity), {from:address});
+    console.log('claim3', web3Util.fromUtf8(identity), identity, {from:address})
+    return t.claim(web3Util.fromUtf8(identity), {from:address});
   })
 }
