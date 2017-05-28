@@ -1,17 +1,47 @@
 import React, { PropTypes, Component } from 'react'
-let submitButton;
+import {claim} from '../services/token';
+let submitForm;
 class Form extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      identity: null
+    };
+  }
+
+  change(event){
+    console.log('event.target.value', event.target.value)
+    this.setState({identity:event.target.value})
+  }
+
+  submit(event){
+    console.log('event.target.value', this.props.user.address,  this.state.identity)
+    event.preventDefault()
+    claim(this.props.user.address, this.state.identity);
+  }
   render(){
+    console.log('this.props.user.status', this.props.user.status)
     if (this.props.user.status == 'claimable') {
-      submitButton = (<button type="button" name="button">Claim</button>)
+      submitForm = (
+        <form className="claim" onSubmit={this.submit.bind(this)}>
+          <input onChange={this.change.bind(this)}
+            style={{width: '350px'}} type="text"
+            name="identity" value={this.state.identity}
+          />
+          <button>Claim</button>
+        </form>
+      )
     }else{
-      submitButton = null;
+      submitForm = null;
     }
     return(
-      <form className="claim">
-        <input style={{width: '350px'}} type="text" name="token_owner_address" value={this.props.user.address}></input>
-        {submitButton}
-      </form>
+      <div>
+        <input
+          style={{width: '350px'}} type="text"
+          name="token_owner_address" value={this.props.user.address}
+        ></input>
+        {submitForm}
+      </div>
     )
   }
 }

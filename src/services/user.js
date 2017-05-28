@@ -1,9 +1,9 @@
-import web3 from './web3';
+import web3Promise from './web3_promise';
 
 export function address() {
   return new Promise(function(resolve, reject){
-    web3().then(function(web3Promise){
-      return web3Promise.web3.eth.getAccounts(function(error, accounts) {
+    web3Promise().then(function(promise){
+      return promise.web3.eth.getAccounts(function(error, accounts) {
         resolve(accounts[0])
       })
     })
