@@ -3,7 +3,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: [
-    // 'webpack-hot-middleware/client',
+    'webpack-hot-middleware/client',
     './app/javascripts/client/eventtoken.js'
   ],
   output: {
