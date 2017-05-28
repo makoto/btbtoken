@@ -68,4 +68,5 @@ Run `npm run build` first to make sure that correct contract artifacts are gener
 - claim()
 - check identity is already taken or not.
 - show other members.
+- pagination
 - styling
