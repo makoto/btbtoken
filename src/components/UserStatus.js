@@ -10,7 +10,7 @@ class UserStatus extends Component {
         message = 'Token is issued';
         break;
       case 'claimed':
-        message = 'Token is under ' + this.props.identity;
+        message = 'Token is under ' + this.props.user.identity;
         break;
       default:
     }

@@ -21,13 +21,21 @@ const initialState = {
 }
 
 function eventTokenApp(state, action) {
+  console.log('action', action)
+  console.log('state', state)
   if (typeof state === 'undefined') {
     return initialState
   }
-
+  switch (action.type) {
+    case 'CHANGE_USER_STATE':
+      return Object.assign({}, state, {
+        user: Object.assign({}, state.user, {status:action.status})
+      })
+    default:
+      return state
+  }
   // For now, don't handle any actions
   // and just return the state given to us.
-  return state
 }
 
 export default eventTokenApp
