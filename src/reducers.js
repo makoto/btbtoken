@@ -7,7 +7,7 @@ const initialState = {
     token_address: '0x0123'
   },
   token:{
-    name:'BTBToken',
+    name:'BreakTheBlockToken',
     symbol:'BTB'
   },
   tokens:[
