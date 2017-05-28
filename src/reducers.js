@@ -1,3 +1,5 @@
+import {CHANGE_USER, CHANGE_TOKEN, SET_ACCOUNTS} from './actions';
+
 const initialState = {
   accounts:[],
   user:{
@@ -26,23 +28,21 @@ function eventTokenApp(state, action) {
     return initialState
   }
   switch (action.type) {
-    case 'SET_ACCOUNTS':
+    case SET_ACCOUNTS:
       return Object.assign({}, state, {
         accounts: [...state.accounts, ...action.accounts]
       })
-    case 'CHANGE_USER':
+    case CHANGE_USER:
       return Object.assign({}, state, {
         user: Object.assign({}, state.user, action.user)
       })
-    case 'CHANGE_TOKEN':
+    case CHANGE_TOKEN:
       return Object.assign({}, state, {
         token: Object.assign({}, state.token, action.token)
       })
     default:
       return state
   }
-  // For now, don't handle any actions
-  // and just return the state given to us.
 }
 
 export default eventTokenApp
