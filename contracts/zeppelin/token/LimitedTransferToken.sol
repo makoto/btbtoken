@@ -27,18 +27,18 @@ https://github.com/OpenZeppelin/zeppelin-solidity/blob/master/contracts/token/Ve
 
 contract LimitedTransferToken is ERC20 {
   // Checks whether it can transfer or otherwise throws.
-  modifier canTransfer(address _sender, uint _value) {
+  modifier canTransfer(address _sender, address _to, uint _value) {
    if (_value > transferableTokens(_sender, uint64(now))) throw;
    _;
   }
 
   // Checks modifier and allows transfer if tokens are not locked.
-  function transfer(address _to, uint _value) canTransfer(msg.sender, _value) {
+  function transfer(address _to, uint _value) canTransfer(msg.sender, _to, _value) {
    return super.transfer(_to, _value);
   }
 
   // Checks modifier and allows transfer if tokens are not locked.
-  function transferFrom(address _from, address _to, uint _value) canTransfer(_from, _value) {
+  function transferFrom(address _from, address _to, uint _value) canTransfer(_from, _to, _value) {
    return super.transferFrom(_from, _to, _value);
   }
 
