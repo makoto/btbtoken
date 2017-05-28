@@ -14,14 +14,13 @@ function mapStateToProps(state) {
     tokens: state.tokens
   };
 }
-
 export function mapDispatchToProps(dispatch) {
   return bindActionCreators(actionCreators, dispatch);
 }
 
 class App extends Component {
   change(event) {
-    this.props.changeUserState(event.target.value);
+    this.props.changeUser({status:event.target.value});
   }
   render() {
     console.log('this.state', this.props)

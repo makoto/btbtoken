@@ -27,9 +27,9 @@ function eventTokenApp(state, action) {
     return initialState
   }
   switch (action.type) {
-    case 'CHANGE_USER_STATE':
+    case 'CHANGE_USER':
       return Object.assign({}, state, {
-        user: Object.assign({}, state.user, {status:action.status})
+        user: Object.assign({}, state.user, action.user)
       })
     default:
       return state

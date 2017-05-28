@@ -1,6 +1,14 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import account from '../services/account';
+
 let message;
 class UserStatus extends Component {
+  componentDidMount(){
+    let self = this;
+    account().then(function(address){
+      self.props.changeUser({address:address});
+    });
+  }
   render(){
     switch (this.props.user.status) {
       case 'not_found':

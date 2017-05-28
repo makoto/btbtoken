@@ -8,7 +8,7 @@ class Form extends Component {
 
     return(
       <form className="claim">
-        <input type="text" name="token_owner_address" value={this.props.user.address}></input>
+        <input style={{width: '350px'}} type="text" name="token_owner_address" value={this.props.user.address}></input>
         {submitButton}
       </form>
     )
