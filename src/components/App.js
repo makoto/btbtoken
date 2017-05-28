@@ -24,21 +24,20 @@ export function mapDispatchToProps(dispatch) {
 
 class App extends Component {
   componentDidMount(){
-    let self = this;
     Promise.all([getToken(), name(), symbol(), ownerAddress()]).then(values => {
       let status, owner_address, user_address, token_address;
       token_address = values[0].address;
       owner_address = values[3];
-      self.props.changeToken({
+      this.props.changeToken({
         address:token_address,
         name:values[1],
         symbol:values[2],
         owner_address:owner_address
       });
-      getAccounts().then(function(accunts){
-        self.props.setAccounts(accunts)
-        getUser(accunts[0], owner_address).then(function(user){
-          self.props.changeUser(user)
+      getAccounts().then(accunts => {
+        this.props.setAccounts(accunts)
+        getUser(accunts[0], owner_address).then((user) => {
+          this.props.changeUser(user)
         })
       })
     });
