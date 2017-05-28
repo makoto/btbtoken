@@ -1,14 +1,15 @@
 const initialState = {
   addresses:[1,2,3],
   user:{
-    address:1,
-    status:'not_found', // (not_found|claimable|claimed),
+    address:null,
+    status:null, // (not_found|claimable|claimed),
     identity: 'Makoto',
     token_address: '0x0123'
   },
   token:{
-    name:'BreakTheBlockToken',
-    symbol:'BTB'
+    name:null,
+    symbol:null,
+    address:null
   },
   tokens:[
     {
@@ -21,8 +22,6 @@ const initialState = {
 }
 
 function eventTokenApp(state, action) {
-  console.log('action', action)
-  console.log('state', state)
   if (typeof state === 'undefined') {
     return initialState
   }
@@ -30,6 +29,10 @@ function eventTokenApp(state, action) {
     case 'CHANGE_USER':
       return Object.assign({}, state, {
         user: Object.assign({}, state.user, action.user)
+      })
+    case 'CHANGE_TOKEN':
+      return Object.assign({}, state, {
+        token: Object.assign({}, state.token, action.token)
       })
     default:
       return state

@@ -6,6 +6,8 @@ import '../App.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions';
+import {getToken, name, symbol, userStatus, ownerAddress} from '../services/token';
+import {address} from '../services/user';
 
 function mapStateToProps(state) {
   return {
@@ -19,11 +21,30 @@ export function mapDispatchToProps(dispatch) {
 }
 
 class App extends Component {
+  componentDidMount(){
+    let self = this;
+    Promise.all([getToken(), name(), symbol(), ownerAddress()]).then(values => {
+      self.props.changeToken({
+        address:values[0].address,
+        name:values[1],
+        symbol:values[2],
+        owner_address:values[3]
+      });
+      address().then(function(address){
+        userStatus(values[3], address).then(function(status){
+          self.props.changeUser({
+            address:address,
+            status:status
+          });
+        });
+      });
+    });
+  }
+
   change(event) {
     this.props.changeUser({status:event.target.value});
   }
   render() {
-    console.log('this.state', this.props)
     return (
       <div className="App">
         <Header {...this.props}></Header>
