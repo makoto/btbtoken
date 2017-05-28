@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react'
-import logo from './logo.svg';
-
+// import logo from './logo.svg';
+let logo = 'http://breaktheblock.simplybusiness.co.uk/assets/img/logo-m.png';
 class Header extends Component {
   render(){
     console.log('this', this.props.token.name)
