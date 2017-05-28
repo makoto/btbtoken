@@ -6,7 +6,7 @@ const initialState = {
     address:null,
     status:null, // (not_found|claimable|claimed),
     identity: null,
-    token_address: '0x0123'
+    token_address: null
   },
   token:{
     name:null,
