@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Header from './Header';
 import Form from './Form';
 import UserStatus from './UserStatus';
+import Tokens from './Tokens';
 import '../App.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -9,6 +10,7 @@ import * as actionCreators from '../actions';
 import {getToken, name, symbol, ownerAddress} from '../services/token';
 import {address, getUser} from '../services/user';
 import {getAccounts} from '../services/accounts';
+import {getTokens} from '../services/tokens';
 
 function mapStateToProps(state) {
   return {
@@ -40,6 +42,9 @@ class App extends Component {
           this.props.changeUser(user)
         })
       })
+      getTokens().then(tokens => {
+        this.props.setTokens(tokens)
+      })
     });
   }
 
@@ -49,6 +54,7 @@ class App extends Component {
         <Header {...this.props}></Header>
         <UserStatus {...this.props}></UserStatus>
         <Form  {...this.props}></Form>
+        <Tokens {...this.props}></Tokens>
       </div>
     );
   }
