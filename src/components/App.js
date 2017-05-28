@@ -7,13 +7,15 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions';
 import {getToken, name, symbol, userStatus, ownerAddress, ownerToIdentity} from '../services/token';
-import {address} from '../services/user';
+import {address, getUser} from '../services/user';
+import {getAccounts} from '../services/accounts';
 
 function mapStateToProps(state) {
   return {
     token: state.token,
     user: state.user,
-    tokens: state.tokens
+    tokens: state.tokens,
+    accounts: state.accounts
   };
 }
 export function mapDispatchToProps(dispatch) {
@@ -24,28 +26,19 @@ class App extends Component {
   componentDidMount(){
     let self = this;
     Promise.all([getToken(), name(), symbol(), ownerAddress()]).then(values => {
-      let status, owner_address, user_address;
-      owner_address = values[0].address;
+      let status, owner_address, user_address, token_address;
+      token_address = values[0].address;
+      owner_address = values[3];
       self.props.changeToken({
-        address:owner_address,
+        address:token_address,
         name:values[1],
         symbol:values[2],
-        owner_address:values[3]
+        owner_address:owner_address
       });
-      address().then(function(_a){
-        user_address = _a
-        return userStatus(values[3], user_address)
-      })
-      .then(function(s){
-        status = s;
-        return ownerToIdentity(user_address)
-      })
-      .then(function(identity){
-        self.props.changeUser({
-          address:user_address,
-          identity:identity,
-          status:status
-        });
+      getAccounts().then(function(accunts){
+        getUser(accunts[0], owner_address).then(function(user){
+          self.props.changeUser(user)
+        })
       })
     });
   }
