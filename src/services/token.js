@@ -32,10 +32,17 @@ export function isTokenOwner(address) {
   })
 }
 
-export function ownerToIdentity(address) {
-  return getToken().then(function(t){
-    return t.ownerToIdentity.call(address)
-  })
+export async function ownerToIdentity(address) {
+  console.log('ownerToIdentity1', address)
+  if (address) {
+    let t = await getToken()
+    let hex = await t.ownerToIdentity.call(address);
+    console.log('ownerToIdentity2', hex)
+    return web3Util.toUtf8(hex);
+  }else{
+    console.log('ownerToIdentity3')
+    return null;
+  }
 }
 
 export function identityToOwner(identity) {
@@ -70,7 +77,6 @@ export function getToken() {
     web3Promise().then(function(promise){
       Token.setProvider(promise.provider);
       Token.deployed().then(function(t){
-        console.log('tokenaddress', t.address)
         resolve(t)
       })
     })

@@ -3,7 +3,7 @@ const initialState = {
   user:{
     address:null,
     status:null, // (not_found|claimable|claimed),
-    identity: 'Makoto',
+    identity: null,
     token_address: '0x0123'
   },
   token:{

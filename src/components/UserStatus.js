@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {address} from '../services/user';
-
 let message;
 class UserStatus extends Component {
   render(){
@@ -9,10 +8,10 @@ class UserStatus extends Component {
         message = 'No token is issued under this address';
         break;
       case 'claimable':
-        message = 'Token is issued waiting for you to claim';
+        message = 'A token is issued waiting for you to claim';
         break;
       case 'claimed':
-        message = 'Token is under ' + this.props.user.identity;
+        message = 'This token is owned by ' + this.props.user.identity;
         break;
       default:
     }
