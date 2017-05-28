@@ -10,18 +10,14 @@ class Form extends Component {
   }
 
   change(event){
-    console.log('event.target.value', event.target.value)
     this.setState({identity:event.target.value})
   }
 
   submit(event){
-    console.log('event.target.value', this.props.user.address,  this.state.identity)
     event.preventDefault()
     let transaction = claim(this.props.user.address, this.state.identity);
-    console.log('transaction', transaction);
   }
   render(){
-    console.log('this.props.user.status', this.props.user.status)
     if (this.props.user.status == 'claimable') {
       submitForm = (
         <form className="claim" onSubmit={this.submit.bind(this)}>
