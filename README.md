@@ -63,4 +63,9 @@ Run `npm run build` first to make sure that correct contract artifacts are gener
 
 ## TODO
 
-- Build a front end
+### Front end
+
+- claim()
+- check identity is already taken or not.
+- show other members.
+- styling
