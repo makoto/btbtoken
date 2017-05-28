@@ -1,4 +1,4 @@
-import React, { PropTypes, Component } from 'react'
+import React, { Component } from 'react'
 // import logo from './logo.svg';
 let logo = 'http://breaktheblock.simplybusiness.co.uk/assets/img/logo-m.png';
 class Header extends Component {

@@ -1,5 +1,6 @@
-import React, { PropTypes, Component } from 'react'
+import React, { Component } from 'react';
 import {claim} from '../services/token';
+import {getUser} from '../services/user';
 let submitForm;
 class Form extends Component {
   constructor(props){
@@ -9,13 +10,19 @@ class Form extends Component {
     };
   }
 
+  select(event){
+    getUser(event.target.value, this.props.token.owner_address).then((user) =>{
+      this.props.changeUser(user)
+    })
+  }
+
   change(event){
     this.setState({identity:event.target.value})
   }
 
   submit(event){
     event.preventDefault()
-    let transaction = claim(this.props.user.address, this.state.identity);
+    claim(this.props.user.address, this.state.identity);
   }
   render(){
     if (this.props.user.status == 'claimable') {
@@ -33,10 +40,14 @@ class Form extends Component {
     }
     return(
       <div>
-        <input
-          style={{width: '350px'}} type="text"
-          name="token_owner_address" value={this.props.user.address}
-        ></input>
+        <select value={this.props.user.address} onChange={this.select.bind(this)}>
+          {
+            this.props.accounts.map(account => {
+              return (<option value={account} >{account}</option>)
+            })
+          }
+        </select>
+        <br/>
         {submitForm}
       </div>
     )
