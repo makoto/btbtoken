@@ -41,20 +41,12 @@ class App extends Component {
     });
   }
 
-  change(event) {
-    this.props.changeUser({status:event.target.value});
-  }
   render() {
     return (
       <div className="App">
         <Header {...this.props}></Header>
         <UserStatus {...this.props}></UserStatus>
         <Form  {...this.props}></Form>
-        <select className="user-status" name="user-status" onChange={this.change.bind(this)}>
-          <option value="not_found">not found</option>
-          <option value="claimable">claimable</option>
-          <option value="claimed">claimed</option>
-        </select>
       </div>
     );
   }
