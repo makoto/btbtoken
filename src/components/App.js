@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import Header from './Header'
+import Header from './Header';
+import Form from './Form';
+import UserStatus from './UserStatus';
 import '../App.css';
 import { connect } from 'react-redux';
 
@@ -17,9 +19,8 @@ class App extends Component {
     return (
       <div className="App">
         <Header {...this.props}></Header>
-        <p className="App-intro">
-          hello
-        </p>
+        <UserStatus {...this.props}></UserStatus>
+        <Form  {...this.props}></Form>
       </div>
     );
   }
