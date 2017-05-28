@@ -6,7 +6,7 @@ import '../App.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions';
-import {getToken, name, symbol, userStatus, ownerAddress, ownerToIdentity} from '../services/token';
+import {getToken, name, symbol, ownerAddress} from '../services/token';
 import {address, getUser} from '../services/user';
 import {getAccounts} from '../services/accounts';
 
@@ -36,6 +36,7 @@ class App extends Component {
         owner_address:owner_address
       });
       getAccounts().then(function(accunts){
+        self.props.setAccounts(accunts)
         getUser(accunts[0], owner_address).then(function(user){
           self.props.changeUser(user)
         })

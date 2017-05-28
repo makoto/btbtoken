@@ -1,5 +1,5 @@
 const initialState = {
-  addresses:[1,2,3],
+  accounts:[],
   user:{
     address:null,
     status:null, // (not_found|claimable|claimed),
@@ -26,6 +26,10 @@ function eventTokenApp(state, action) {
     return initialState
   }
   switch (action.type) {
+    case 'SET_ACCOUNTS':
+      return Object.assign({}, state, {
+        accounts: [...state.accounts, ...action.accounts]
+      })
     case 'CHANGE_USER':
       return Object.assign({}, state, {
         user: Object.assign({}, state.user, action.user)
