@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import account from '../services/account';
+import {address} from '../services/user';
 
 let message;
 class UserStatus extends Component {
   componentDidMount(){
     let self = this;
-    account().then(function(address){
+    address().then(function(address){
       self.props.changeUser({address:address});
     });
   }
