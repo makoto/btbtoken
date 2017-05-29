@@ -1,4 +1,4 @@
-import {CHANGE_USER, CHANGE_TOKEN, SET_ACCOUNTS, SET_TOKENS} from './actions';
+import {CHANGE_USER, CHANGE_TOKEN, SET_ACCOUNTS, SET_TOKENS, ADD_TOKEN} from './actions';
 
 const initialState = {
   accounts:[],
@@ -25,10 +25,14 @@ function eventTokenApp(state, action) {
       return Object.assign({}, state, {
         accounts: [...state.accounts, ...action.accounts]
       })
-      case SET_TOKENS:
-        return Object.assign({}, state, {
-          tokens: [...state.tokens, ...action.tokens]
-        })
+    case SET_TOKENS:
+      return Object.assign({}, state, {
+        tokens: [...state.tokens, ...action.tokens]
+      })
+    case ADD_TOKEN:
+      return Object.assign({}, state, {
+        tokens: [...state.tokens, action.token]
+      })
     case CHANGE_USER:
       return Object.assign({}, state, {
         user: Object.assign({}, state.user, action.user)

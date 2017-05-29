@@ -42,8 +42,9 @@ class App extends Component {
           this.props.changeUser(user)
         })
       })
-      getTokens().then(tokens => {
-        this.props.setTokens(tokens)
+      getTokens(token => {
+        console.log('token', token)
+        this.props.addToken(token)
       })
     });
   }

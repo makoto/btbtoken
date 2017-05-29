@@ -7,6 +7,7 @@ export const CHANGE_USER = 'CHANGE_USER';
 export const CHANGE_TOKEN = 'CHANGE_TOKEN';
 export const SET_ACCOUNTS = 'SET_ACCOUNTS';
 export const SET_TOKENS = 'SET_TOKENS';
+export const ADD_TOKEN = 'ADD_TOKEN';
 
 /*
  * other constants
@@ -22,6 +23,10 @@ export function claimToken(identity) {
 
 export function setAccounts(accounts) {
   return { type: SET_ACCOUNTS, accounts }
+}
+
+export function addToken(token) {
+  return { type: ADD_TOKEN, token }
 }
 
 export function setTokens(tokens) {
