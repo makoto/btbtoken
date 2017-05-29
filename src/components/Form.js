@@ -25,10 +25,15 @@ class Form extends Component {
   submit(event){
     event.preventDefault()
     claim(this.props.user.address, this.state.identity).then(trx => {
+      console.log('after trx')
       this.setState({
         in_progress:true,
         block_hash: trx.receipt.blockHash
       })
+    })
+    console.log('before trx')
+    this.setState({
+      in_progress:true
     })
   }
   render(){
