@@ -74,8 +74,10 @@ export async function userStatus(owner, spender){
 
 export function getToken() {
   return new Promise(function(resolve, reject){
-    web3Promise().then(function(promise){
+    web3Promise().then(function(promise, provider, readOnly, networkId){
+      console.log('promise', 'provider, readOnly, networkId', promise, provider, readOnly, networkId)
       Token.setProvider(promise.provider);
+      Token.setNetwork(3);
       Token.deployed().then(function(t){
         resolve(t)
       })
