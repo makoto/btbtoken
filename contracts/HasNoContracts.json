@@ -1,0 +1,48 @@
+{
+  "contract_name": "HasNoContracts",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "contractAddr",
+          "type": "address"
+        }
+      ],
+      "name": "reclaimContract",
+      "outputs": [],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "payable": false,
+      "type": "function"
+    }
+  ],
+  "unlinked_binary": "0x60606040525b60008054600160a060020a03191633600160a060020a03161790555b5b6101ba806100316000396000f300606060405263ffffffff60e060020a6000350416632aed7f3f811461003a5780638da5cb5b14610055578063f2fde38b1461007e575b610000565b3461000057610053600160a060020a0360043516610099565b005b3461000057610062610127565b60408051600160a060020a039092168252519081900360200190f35b3461000057610053600160a060020a0360043516610136565b005b6000805433600160a060020a039081169116146100b557610000565b5060008054604080517ff2fde38b000000000000000000000000000000000000000000000000000000008152600160a060020a039283166004820152905184939284169263f2fde38b926024808201939182900301818387803b156100005760325a03f115610000575050505b5b5050565b600054600160a060020a031681565b60005433600160a060020a0390811691161461015157610000565b600160a060020a03811615610189576000805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a0383161790555b5b5b505600a165627a7a72305820fbaa784047b74f578896d119f124f4aa129e5d8acd6074bc7ccf1aa3183a383a0029",
+  "networks": {},
+  "schema_version": "0.0.5",
+  "updated_at": 1495973958384
+}

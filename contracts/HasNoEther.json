@@ -1,0 +1,52 @@
+{
+  "contract_name": "HasNoEther",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "reclaimEther",
+      "outputs": [],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "payable": true,
+      "type": "constructor"
+    },
+    {
+      "payable": false,
+      "type": "fallback"
+    }
+  ],
+  "unlinked_binary": "0x60606040525b5b60008054600160a060020a03191633600160a060020a03161790555b600034111561003057610000565b5b5b610187806100416000396000f3006060604052361561003b5763ffffffff60e060020a6000350416638da5cb5b81146100495780639f727c2714610072578063f2fde38b14610081575b34610000576100475b5b565b005b346100005761005661009c565b60408051600160a060020a039092168252519081900360200190f35b34610000576100476100ab565b005b3461000057610047600160a060020a0360043516610103565b005b600054600160a060020a031681565b60005433600160a060020a039081169116146100c657610000565b60008054604051600160a060020a0391821692309092163180156108fc0292909190818181858888f19350505050151561004457610000565b5b5b565b60005433600160a060020a0390811691161461011e57610000565b600160a060020a03811615610156576000805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a0383161790555b5b5b505600a165627a7a72305820a619f9efb3bec96c85080a55ef7df1189f5645cb2e705ab1c3adf75ab7e4e97a0029",
+  "networks": {},
+  "schema_version": "0.0.5",
+  "updated_at": 1495973958384
+}
