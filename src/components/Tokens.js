@@ -3,11 +3,11 @@ let is_claimed;
 class Tokens extends Component {
   render(){
     return(
-      <table>
-        <th>
-          <td>identity</td>
-          <td>address</td>
-        </th>
+      <table style={{margin:'auto', marginTop:'2em'}}>
+        <tr>
+          <th>identity</th>
+          <th>address</th>
+        </tr>
         {
           this.props.tokens.map(token => {
             return (

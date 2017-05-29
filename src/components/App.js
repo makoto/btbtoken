@@ -43,7 +43,6 @@ class App extends Component {
         })
       })
       getTokens(token => {
-        console.log('token', token)
         this.props.addToken(token)
       })
     });
@@ -54,7 +53,7 @@ class App extends Component {
       <div className="App">
         <Header {...this.props}></Header>
         <UserStatus {...this.props}></UserStatus>
-        <Form  {...this.props}></Form>
+        <Form {...this.props}></Form>
         <Tokens {...this.props}></Tokens>
       </div>
     );
