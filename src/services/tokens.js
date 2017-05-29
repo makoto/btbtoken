@@ -5,7 +5,7 @@ const web3Util = new Web3()
 
 export function getTokens(callback) {
   getToken().then(t => {
-    return t.TokenClaimed({},{fromBlock:0})
+    return t.TokenClaimed({},{fromBlock:1017422})
   }).then(event => {
     return event.watch((err,result) =>{
       // let current_address = await t.identityToOwner(result.args.identity);
