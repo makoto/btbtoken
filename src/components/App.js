@@ -52,8 +52,10 @@ class App extends Component {
     return (
       <div className="App">
         <Header {...this.props}></Header>
+        <h3>Your token</h3>
         <UserStatus {...this.props}></UserStatus>
         <Form {...this.props}></Form>
+        <h3>People who claimed their token</h3>
         <Tokens {...this.props}></Tokens>
       </div>
     );
